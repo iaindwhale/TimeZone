@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Timezone
 {
@@ -13,21 +12,29 @@ namespace Timezone
         {
             List<Tuple<string, string>> lReturn = new List<Tuple<string, string>>();
 
-            string[] fileParts = File.ReadAllText("Timezone.txt").Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string resourceFile = Properties.Resources.Timezone;
+            string[] fileParts = resourceFile.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string part in fileParts)
             {
                 string[] sLineParts = part.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
-
-                lReturn.Add(timeZone);
+                // Only add to list if there are items in the Array
+                if ( sLineParts.Length == 2)
+                { 
+                    Tuple<string, string> timeZone = new Tuple<string, string>(sLineParts.First(), sLineParts.Last());
+                    lReturn.Add(timeZone);
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid input line \"{part}\", number of parts is {sLineParts.Length}");
+                }
             }
-
             return lReturn;
         }
         public void Dispose()
         {
+
         }
     }
 }

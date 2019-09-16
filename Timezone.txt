@@ -6,3 +6,5 @@ NA Dublin
 10:00 Hawaii
 20:00 Alaska
 05:02 Arizona
+07:34 Nuku'alofa
+04 30 Glasgow
